@@ -6,13 +6,18 @@ const Header = () => {
     <div>
       <div className="navbar bg-pink-100 text-black">
         <div className="flex-1">
-          <a className="btn btn-ghost normal-case text-xl italic font-bold">
+          <Link
+            to="/"
+            className="btn btn-ghost normal-case text-2xl  font-bold"
+          >
             UsedPC
-          </a>
+          </Link>
         </div>
         <div className="flex-none gap-2">
           <div className="form-control">
-            <Link className="mr-10 font-black font-semibold">BLOGS</Link>
+            <Link to="/blogs" className="mr-10 font-black font-semibold">
+              BLOGS
+            </Link>
           </div>
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">

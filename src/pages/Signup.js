@@ -42,7 +42,7 @@ const Signup = () => {
               ></input>
             </div>
             <div className="mb-6 w-72 mx-auto">
-              <label className="text-xl font-bold underline" for="myfile">
+              <label className="text-xl font-bold underline" htmlFor="myfile">
                 Select Your Picture
               </label>
               <input
@@ -52,6 +52,30 @@ const Signup = () => {
                 name="myfile"
                 required
               ></input>
+            </div>
+            <div className="form-control justify-center flex-wrap flex-row">
+              <label className="label cursor-pointer">
+                <span className="label-text mr-5">Buyer</span>
+                <input
+                  type="radio"
+                  name="radio-10"
+                  id="buyer"
+                  className="radio checked:bg-red-500"
+                  checked
+                />
+              </label>
+            </div>
+            <div className="form-control justify-center flex-wrap flex-row mb-5">
+              <label className="label cursor-pointer">
+                <span className="label-text mr-5">Seller</span>
+                <input
+                  id="seller"
+                  type="radio"
+                  name="radio-10"
+                  className="radio checked:bg-blue-500 "
+                  checked
+                />
+              </label>
             </div>
 
             <div className="flex items-start mb-6 justify-center">
