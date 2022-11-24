@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
-    <div>
-      <div className="form mt-20">
+    <div className="w-full	 mx-auto">
+      <div className="form   mt-20 ">
         <h1 className="text-4xl underline text-white m-10">Log In Form</h1>
         <form
           className="pb-20"
@@ -13,7 +13,7 @@ const Login = () => {
           <div className="mb-6">
             <label
               htmlFor="email"
-              className="block mb-2 text-sm font-medium text-left text-white dark:text-gray-300"
+              className="block mb-2 text-sm font-medium  text-white dark:text-gray-300"
             >
               Your email
             </label>
@@ -21,7 +21,7 @@ const Login = () => {
               type="email"
               id="email"
               name="email"
-              className="bg-black border border-gray-300 text-white text-sm rounded-lg w-80 focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-black border mx-auto border-gray-300 text-white text-sm rounded-lg w-80 focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Email"
               required
             ></input>
@@ -29,7 +29,7 @@ const Login = () => {
           <div className="mb-6">
             <label
               htmlFor="password"
-              className="block mb-2 text-sm font-medium text-left  text-white dark:text-gray-300"
+              className="block mb-2 text-sm font-medium   text-white dark:text-gray-300"
             >
               Your password
             </label>
@@ -37,18 +37,18 @@ const Login = () => {
               type="password"
               id="password"
               name="password"
-              className="bg-black border w-80 border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-black border w-80 mx-auto border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               required
               placeholder="Password"
             ></input>
           </div>
-          <div className="flex items-start mb-6">
-            <div className="flex items-center h-5">
+          <div className="flex items-start mb-6 justify-center">
+            <div className="flex items-center h-5 ">
               <input
                 id="remember"
                 type="checkbox"
                 value=""
-                className="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+                className="w-4 h-4  bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
                 required
               ></input>
             </div>
@@ -62,11 +62,11 @@ const Login = () => {
           {/* {success && (
             <p className="my-5 text-red-700">Logged In Successfully</p>
           )} */}
-          <p className="my-5 text-red-700">{error}</p>
+          <p className="my-5 text-red-700">{/* {error} */}</p>
 
           <p className="text-white my-5">
             <small className="mr-5">Don't have an account?</small>
-            <Link to="/signin"> Sign Up</Link>
+            <Link to="/signup"> Sign Up</Link>
           </p>
           <button
             type="submit"
