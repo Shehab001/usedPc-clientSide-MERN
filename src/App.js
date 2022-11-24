@@ -1,11 +1,13 @@
+import { RouterProvider } from "react-router";
 import "./App.css";
+import router from "./routes/Routes";
+import Footer from "./shared/Footer";
 
 function App() {
   return (
-    <div className="App">
-      <h1 className="text-3xl font-bold underline">
-        Hello world! <button className="btn btn-primary">Button</button>
-      </h1>
+    <div className="App max-w-[1440px] mx-auto h-full">
+      <RouterProvider router={router}> </RouterProvider>
+      <Footer></Footer>
     </div>
   );
 }
