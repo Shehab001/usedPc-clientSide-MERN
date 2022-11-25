@@ -11,6 +11,7 @@ import Signup from "../pages/Signup";
 import Dashboard from "../pages/seller/Dashboard";
 import Dashboardd from "../pages/admin/Dashboardd";
 import Error from "../shared/Error";
+import Loader from "../pages/seller/Loader";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: "/admindashboard",
         element: <Dashboardd></Dashboardd>,
+      },
+      {
+        path: "/loader",
+        element: <Loader></Loader>,
       },
       {
         path: "*",

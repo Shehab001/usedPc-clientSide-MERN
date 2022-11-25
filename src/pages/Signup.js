@@ -1,16 +1,68 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import AuthProvider, { AuthContext } from "../Context/AuthProvider";
 
 const Signup = () => {
+  const { createUser, updateUserProfile, user } = useContext(AuthContext);
+  //console.log(user);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [role, setRole] = useState("");
+  // const navigate = useNavigate();
+  // const location = useLocation();
+  // const from = location.state?.from?.pathname || "/";
+  const onValueChange = (event) => {
+    setRole(event.target.value);
+  };
+  console.log(role);
+  const handleForm = (event) => {
+    //alert("hi");
+    event.preventDefault();
+
+    setSuccess(false);
+
+    const form = event.target;
+
+    const name = form.email.value;
+    const pass = form.password.value;
+    console.log(name, pass, role);
+
+    if (pass.length < 6) {
+      setError("Password should be 6 characters or more.");
+      return;
+    }
+
+    createUser(name, pass)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+
+        setSuccess(true);
+        form.reset();
+        setError("");
+        // navigate(from, { replace: true });
+        //handleUpdateUserProfile(url);
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        setError(errorMessage);
+      });
+    // const handleUpdateUserProfile = (url) => {
+    //   const profile = {
+    //     photoURL: url,
+    //   };
+    //   console.log(profile);
+    //   updateUserProfile(profile)
+    //     .then(() => {})
+    //     .catch((error) => console.error(error));
+    // };
+  };
   return (
     <div>
       <div className="w-full	 mx-auto">
         <div className="form   mt-20 ">
           <h1 className="text-4xl underline text-white m-10">Sign Up Form</h1>
-          <form
-            className="pb-20"
-            //</div>onSubmit={handleForm}
-          >
+          <form className="pb-20" onSubmit={handleForm}>
             <div className="mb-6">
               <input
                 type="text"
@@ -50,7 +102,6 @@ const Signup = () => {
                 id="myfile"
                 className="w-52 mt-5 mx-auto"
                 name="myfile"
-                required
               ></input>
             </div>
             <div className="form-control justify-center flex-wrap flex-row">
@@ -58,10 +109,11 @@ const Signup = () => {
                 <span className="label-text mr-5">Buyer</span>
                 <input
                   type="radio"
-                  name="radio-10"
+                  name="radio"
                   id="buyer"
-                  className="radio checked:bg-red-500"
-                  checked
+                  className="radio checked:bg-blue-500 "
+                  value="buyer"
+                  onChange={onValueChange}
                 />
               </label>
             </div>
@@ -71,9 +123,10 @@ const Signup = () => {
                 <input
                   id="seller"
                   type="radio"
-                  name="radio-10"
+                  name="radio"
                   className="radio checked:bg-blue-500 "
-                  checked
+                  value="seller"
+                  onChange={onValueChange}
                 />
               </label>
             </div>
@@ -95,9 +148,9 @@ const Signup = () => {
                 Remember me
               </label>
             </div>
-            {/* {success && (
-            <p className="my-5 text-red-700">Logged In Successfully</p>
-          )} */}
+            {success && (
+              <p className="my-5 text-red-700">Logged In Successfully</p>
+            )}
             <p className="my-5 text-red-700">{/* {error} */}</p>
 
             <p className="text-white my-5">
