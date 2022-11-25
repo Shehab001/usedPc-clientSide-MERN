@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Context/AuthProvider";
 
 const Header = () => {
   return (
@@ -39,10 +40,10 @@ const Header = () => {
                 </a>
               </li>
               <li>
-                <a>Sign In</a>
+                <Link to="/login">Log In</Link>
               </li>
               <li>
-                <a>Logout</a>
+                <Link to="signup">Sign Up</Link>
               </li>
             </ul>
           </div>
