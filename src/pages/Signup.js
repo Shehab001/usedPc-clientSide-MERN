@@ -1,31 +1,38 @@
 import React, { useContext, useState } from "react";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
-import AuthProvider, { AuthContext } from "../Context/AuthProvider";
+import { AuthContext } from "../Context/AuthProvider";
 
 const Signup = () => {
   const { createUser, updateUserProfile, user } = useContext(AuthContext);
   //console.log(user);
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
+
   const [role, setRole] = useState("");
+  const [img, setImg] = useState("");
   // const navigate = useNavigate();
   // const location = useLocation();
   // const from = location.state?.from?.pathname || "/";
   const onValueChange = (event) => {
     setRole(event.target.value);
   };
-  console.log(role);
+  //console.log(role);
+  const saveImg = (event) => {
+    if (event.target.files.length != 0) {
+      setImg(event.target.files[0]);
+    }
+  };
+  //console.log(img);
+
   const handleForm = (event) => {
     //alert("hi");
     event.preventDefault();
-
-    setSuccess(false);
 
     const form = event.target;
 
     const name = form.email.value;
     const pass = form.password.value;
-    console.log(name, pass, role);
+    //console.log(name, pass, role);
 
     if (pass.length < 6) {
       setError("Password should be 6 characters or more.");
@@ -36,8 +43,7 @@ const Signup = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
-
-        setSuccess(true);
+        toast.success("Successful");
         form.reset();
         setError("");
         // navigate(from, { replace: true });
@@ -45,7 +51,8 @@ const Signup = () => {
       })
       .catch((error) => {
         const errorMessage = error.message;
-        setError(errorMessage);
+        //console.log("hi");
+        setError("Invalid Credentials");
       });
     // const handleUpdateUserProfile = (url) => {
     //   const profile = {
@@ -57,6 +64,7 @@ const Signup = () => {
     //     .catch((error) => console.error(error));
     // };
   };
+
   return (
     <div>
       <div className="w-full	 mx-auto">
@@ -102,6 +110,7 @@ const Signup = () => {
                 id="myfile"
                 className="w-52 mt-5 mx-auto"
                 name="myfile"
+                onChange={saveImg}
               ></input>
             </div>
             <div className="form-control justify-center flex-wrap flex-row">
@@ -148,10 +157,6 @@ const Signup = () => {
                 Remember me
               </label>
             </div>
-            {success && (
-              <p className="my-5 text-red-700">Logged In Successfully</p>
-            )}
-            <p className="my-5 text-red-700">{/* {error} */}</p>
 
             <p className="text-white my-5">
               <small className="mr-5">Already have an account?</small>
