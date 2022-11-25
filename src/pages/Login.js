@@ -1,15 +1,66 @@
-import React from "react";
+import { GoogleAuthProvider } from "firebase/auth";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Context/AuthProvider";
+import toast from "react-hot-toast";
 
 const Login = () => {
+  const { signIn, providerLogin, loading } = useContext(AuthContext);
+
+  // // const [user, setUser] = useState({});
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+  // const navigate = useNavigate();
+  // const location = useLocation();
+  // const from = location.state?.from?.pathname || "/";
+
+  const googleProvider = new GoogleAuthProvider();
+
+  //console.log(from);
+
+  const handleBtn = () => {
+    providerLogin(googleProvider)
+      .then((result) => {
+        const user = result.user;
+        // setUser(user);
+        //navigate(from, { replace: true });
+        //console.log(user);
+        toast.success("Successful");
+      })
+      .catch((err) => {
+        toast.error("Successful");
+      });
+  };
+
+  const handleForm = (event) => {
+    event.preventDefault();
+
+    setSuccess(false);
+
+    const form = event.target;
+    const name = form.email.value;
+    const pass = form.password.value;
+    //console.log(name, pass);
+
+    signIn(name, pass)
+      .then((userCredential) => {
+        const user = userCredential.user;
+
+        toast.success("Successful");
+        //setUser(user);
+        // console.log(user);
+        // navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        toast.error("Invalid Credentials");
+      });
+  };
   return (
     <div className="w-full	 mx-auto">
       <div className="form   mt-20 ">
         <h1 className="text-4xl underline text-white m-10">Log In Form</h1>
-        <form
-          className="pb-20"
-          //</div>onSubmit={handleForm}
-        >
+        <form className="pb-20" onSubmit={handleForm}>
           <div className="mb-6">
             <input
               type="email"
@@ -47,10 +98,6 @@ const Login = () => {
               Remember me
             </label>
           </div>
-          {/* {success && (
-            <p className="my-5 text-red-700">Logged In Successfully</p>
-          )} */}
-          <p className="my-5 text-red-700">{/* {error} */}</p>
 
           <p className="text-white my-5">
             <small className="mr-5">Don't have an account?</small>
@@ -64,7 +111,7 @@ const Login = () => {
           </button>
           <div className="flex justify-evenly pt-5">
             <span
-              // onClick={handleBtn}
+              onClick={handleBtn}
               className="text-white font-bold  cursor-pointer text-2xl"
             >
               Google
