@@ -8,7 +8,7 @@ const MyOrders = () => {
           <img
             src="https://placeimg.com/400/400/arch"
             alt="Album"
-            className="pl-5 rounded"
+            className=" p-5 rounded"
           />
         </figure>
         <div className="card-body pt-20">

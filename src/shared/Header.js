@@ -19,6 +19,9 @@ const Header = () => {
               BLOGS
             </Link>
           </div>
+          <div className="form-control">
+            <Link className="mr-10 font-black font-semibold">Dashboard</Link>
+          </div>
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">

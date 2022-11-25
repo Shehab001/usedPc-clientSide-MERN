@@ -11,12 +11,6 @@ const Login = () => {
           //</div>onSubmit={handleForm}
         >
           <div className="mb-6">
-            <label
-              htmlFor="email"
-              className="block mb-2 text-sm font-medium  text-white dark:text-gray-300"
-            >
-              Your email
-            </label>
             <input
               type="email"
               id="email"
@@ -27,12 +21,6 @@ const Login = () => {
             ></input>
           </div>
           <div className="mb-6">
-            <label
-              htmlFor="password"
-              className="block mb-2 text-sm font-medium   text-white dark:text-gray-300"
-            >
-              Your password
-            </label>
             <input
               type="password"
               id="password"
