@@ -8,12 +8,11 @@ const override: CSSProperties = {
 };
 
 const Loader = () => {
-  let [loading, setLoading] = useState(true);
+  let [loading, setLoading] = useState("true");
 
   return (
-    <div className="sweet-loading my-20">
+    <div className="sweet-loading my-20 ">
       <ClipLoader
-        color={"white"}
         cssOverride={override}
         size={150}
         aria-label="Loading Spinner"
