@@ -3,16 +3,17 @@ import toast from "react-hot-toast";
 import { AuthContext } from "../Context/AuthProvider";
 
 const Order = (props) => {
-  const { name, sname, reprice, email } = props.product;
-  const { user } = useContext(AuthContext);
+  const { pname, sname, reprice, email } = props.product;
+  const { user, state, setState } = useContext(AuthContext);
   const [phn, setPhn] = useState(null);
 
   const [des, setDes] = useState(null);
-  //console.log(user.email);
+  // console.log(props);
   //console.log(phn, des);
-  const handleSave = () => {
+  const handleSave = (event) => {
+    event.preventDefault();
     const data = {
-      itemname: name,
+      itemname: pname,
       useremail: user.email,
       price: reprice,
       usernumber: phn,
@@ -32,8 +33,9 @@ const Order = (props) => {
         //console.log(data);
         if (data.acknowledged) {
           toast.success("Order confirmed");
+          props.x();
         } else {
-          toast.error(data.message);
+          toast.error("Canceled");
         }
       });
   };
@@ -57,7 +59,7 @@ const Order = (props) => {
 
           <input
             type="text"
-            defaultValue={`Product Name : ${name}`}
+            defaultValue={`Product Name : ${pname}`}
             disabled
             className="input input-bordered input-success w-full max-w-xs mt-5"
           />
@@ -73,32 +75,33 @@ const Order = (props) => {
             disabled
             className="input input-bordered input-success w-full max-w-xs mt-5"
           />
-          <input
-            type="text"
-            name="phn"
-            placeholder="Phone Number"
-            className="input input-bordered input-success w-full max-w-xs mt-5"
-            onChange={(event) => setPhn(event.target.value)}
-          />
-          <select
-            className="select select-success w-full max-w-xs mt-5 "
-            onChange={(event) => setDes(event.target.value)}
-          >
-            <option disabled selected>
-              Pick Location
-            </option>
-            <option>Badda</option>
-            <option>Gulistan</option>
-            <option>Uttara</option>
-            <option>Gulshan</option>
-            <option>Jatrabari</option>
-            <option>Narayanganj</option>
-            <option>Dhanmondi</option>
-          </select>
-          <br></br>
-          <button className="btn btn-primary mt-10" onClick={handleSave}>
-            Confirm
-          </button>
+          <form onSubmit={handleSave}>
+            <input
+              type="text"
+              name="phn"
+              placeholder="Phone Number"
+              required
+              className="input input-bordered input-success w-full max-w-xs mt-5"
+              onChange={(event) => setPhn(event.target.value)}
+            />
+            <select
+              className="select select-success w-full max-w-xs mt-5"
+              onChange={(event) => setDes(event.target.value)}
+            >
+              <option disabled selected>
+                Pick Location
+              </option>
+              <option>Badda</option>
+              <option>Gulistan</option>
+              <option>Uttara</option>
+              <option>Gulshan</option>
+              <option>Jatrabari</option>
+              <option>Narayanganj</option>
+              <option>Dhanmondi</option>
+            </select>
+            <br></br>
+            <button className="btn btn-primary mt-10">Confirm</button>
+          </form>
         </div>
       </div>
     </div>

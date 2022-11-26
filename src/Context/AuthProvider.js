@@ -17,6 +17,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState("working");
   const [loading, setLoading] = useState(true);
   const [hide, setHide] = useState(true);
+  const [state, setState] = useState(true);
 
   const providerLogin = (provider) => {
     setLoading(true);
@@ -64,6 +65,8 @@ const AuthProvider = ({ children }) => {
     loading,
     hide,
     setHide,
+    state,
+    setState,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

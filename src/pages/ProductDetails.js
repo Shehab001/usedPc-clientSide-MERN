@@ -1,15 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLoaderData } from "react-router";
+import { AuthContext } from "../Context/AuthProvider";
 import Order from "./Order";
 
 const ProductDetails = () => {
   const [send, setSend] = useState({});
+  const [stat, setStat] = useState(false);
   const products = useLoaderData();
   //console.log(products);
+  const x = () => {
+    window.location.reload(false);
+  };
+
   return (
     <div>
       <div>
-        <Order key={send._id} product={send}></Order>
+        <Order key={send._id} x={x} product={send}></Order>
         {products.map((product) => (
           <div className="card lg:card-side card-center bg-base-100 shadow-xl my-20 mx-10">
             <figure className="lg:w-4/6 mx-auto w-full">
@@ -21,7 +27,7 @@ const ProductDetails = () => {
             </figure>
             <div className="card-body items-center">
               <h2 className="text-center text-2xl font-bold mr-10 underline mt-10">
-                {product.name}
+                {product.pname}
               </h2>
               <div className="text-left p-10">
                 <p className="font-semibold m-2 ">
@@ -39,6 +45,7 @@ const ProductDetails = () => {
                 <p className="font-semibold m-2 ">
                   Posted Time : {product.posted}
                 </p>
+                <p className="font-semibold m-2 ">Remaining : {product.left}</p>
                 <p className="font-semibold m-2 relative ">
                   <span>Seller's Name : {product.sname}</span>
                   <span className="absolute -right-30">
@@ -63,7 +70,9 @@ const ProductDetails = () => {
                 <label
                   htmlFor="my-modal-3"
                   className="btn btn-primary"
-                  onClick={() => setSend(product)}
+                  onClick={() => {
+                    setSend(product);
+                  }}
                 >
                   Order
                 </label>

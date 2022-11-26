@@ -11,7 +11,9 @@ const Advertise = () => {
     const result = data.filter((word) => word.left > 0);
     setAdvertise(result);
   };
-
+  const x = () => {
+    window.location.reload(false);
+  };
   useEffect(() => {
     fetch("http://localhost:5000/advertise")
       .then((res) => res.json())
@@ -19,7 +21,7 @@ const Advertise = () => {
   }, []);
   return (
     <div>
-      <Order key={send._id} product={send}></Order>
+      <Order key={send._id} x={x} product={send}></Order>
       {advertise.length > 0 ? (
         <h1 className="text-4xl italic mt-10 text-center text-white  underline my-20">
           Advertise Product
@@ -35,7 +37,7 @@ const Advertise = () => {
             </figure>
             <div className="card-body">
               <h2 className="text-center text-2xl font-bold mr-10 underline mt-10">
-                {ad.name}
+                {ad.pname}
               </h2>
               <div className="text-left p-2">
                 <p className="font-semibold m-2 ">Location : {ad.location}</p>
@@ -47,6 +49,7 @@ const Advertise = () => {
                 </p>
                 <p className="font-semibold m-2 ">Years of Use : {ad.use}</p>
                 <p className="font-semibold m-2 ">Posted Time : {ad.posted}</p>
+                <p className="font-semibold m-2 ">Remaining : {ad.left}</p>
                 <p className="font-semibold m-2 relative ">
                   <span>Seller's Name : {ad.sname}</span>
                   <span className="absolute -right-30">
