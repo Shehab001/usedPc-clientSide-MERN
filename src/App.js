@@ -1,7 +1,7 @@
 import { RouterProvider } from "react-router";
 import "./App.css";
 import router from "./routes/Routes";
-import Footer from "./shared/Footer";
+
 import { Toaster } from "react-hot-toast";
 
 function App() {
@@ -18,7 +18,6 @@ function App() {
           },
         }}
       />
-      {/* <Footer></Footer> */}
     </div>
   );
 }

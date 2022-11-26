@@ -1,6 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Banner from "../pages/Banner";
 const Category = () => {
+  const [allcategory, setAllcategory] = useState([]);
+
+  console.log(allcategory);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/allcategory")
+      .then((res) => res.json())
+      .then((data) => setAllcategory(data));
+  }, []);
   return (
     <>
       <Banner></Banner>
@@ -9,44 +19,26 @@ const Category = () => {
           All Categories
         </h1>
         <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 mx-10 mb-20">
-          <div className="card w-96 bg-base-100 shadow-xl image-full">
-            <figure>
-              <img src="https://placeimg.com/400/225/arch" alt="Shoes" />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">Shoes!</h2>
-              <p>If a dog chews shoes whose shoes does he choose?</p>
-              <div className="card-actions justify-end">
-                <button className="btn btn-primary">Show More</button>
+          {allcategory.map((category) => (
+            <div className="card card-compact w-96 bg-base-100 shadow-xl">
+              <figure>
+                <img src={category.url} alt={category.name} />
+              </figure>
+              <div className="card-body">
+                <h2 className="card-title font-bold text-2xl">
+                  {category.name}
+                </h2>
+                <p className="text-left font-semibold">
+                  Total Laptop : {category.totalproduct}
+                </p>
+                <div className="card-actions justify-end">
+                  <button className="btn btn-primary">
+                    <Link to={`/categories/${category.name}`}>More</Link>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-          {/* -------------------------------------- */}
-          <div className="card w-96 bg-base-100 shadow-xl image-full">
-            <figure>
-              <img src="https://placeimg.com/400/225/arch" alt="Shoes" />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">Shoes!</h2>
-              <p>If a dog chews shoes whose shoes does he choose?</p>
-              <div className="card-actions justify-end">
-                <button className="btn btn-primary">Buy Now</button>
-              </div>
-            </div>
-          </div>
-          {/* -------------------------------------- */}
-          <div className="card w-96 bg-base-100 shadow-xl image-full">
-            <figure>
-              <img src="https://placeimg.com/400/225/arch" alt="Shoes" />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">Shoes!</h2>
-              <p>If a dog chews shoes whose shoes does he choose?</p>
-              <div className="card-actions justify-end">
-                <button className="btn btn-primary">Buy Now</button>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </>

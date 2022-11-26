@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Context/AuthProvider";
 import toast from "react-hot-toast";
-import Loader from "./seller/Loader";
+import Loader from "../shared/Loader";
 
 const Login = () => {
   const { signIn, providerLogin, loading } = useContext(AuthContext);

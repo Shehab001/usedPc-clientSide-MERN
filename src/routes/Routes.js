@@ -11,7 +11,7 @@ import Signup from "../pages/Signup";
 import Dashboard from "../pages/seller/Dashboard";
 import Dashboardd from "../pages/admin/Dashboardd";
 import Error from "../shared/Error";
-import Loader from "../pages/seller/Loader";
+import Loader from "../shared/Loader";
 
 const router = createBrowserRouter([
   {
@@ -24,8 +24,10 @@ const router = createBrowserRouter([
         element: <Category></Category>,
       },
       {
-        path: "/categories",
+        path: "/categories/:id",
         element: <ProductDetails></ProductDetails>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/productdetails/${params.id}`),
       },
       {
         path: "/blogs",
@@ -55,6 +57,7 @@ const router = createBrowserRouter([
         path: "/loader",
         element: <Loader></Loader>,
       },
+
       {
         path: "*",
         element: <Error></Error>,

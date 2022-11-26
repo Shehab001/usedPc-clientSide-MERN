@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Context/AuthProvider";
-import Loader from "./seller/Loader";
+import Loader from "../shared/Loader";
 
 const Signup = () => {
   const { createUser, updateUserProfile, user } = useContext(AuthContext);
