@@ -1,6 +1,19 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { AuthContext } from "../Context/AuthProvider";
 
-const Order = () => {
+const Order = (props) => {
+  const { name, sname, reprice } = props.product;
+  const { user } = useContext(AuthContext);
+  const [phn, setPhn] = useState(null);
+
+  const [des, setDes] = useState(null);
+  //console.log(user.email);
+  //console.log(phn, des);
+  const handleSave = () => {
+    fetch("http://localhost:5000/order")
+      .then((res) => res.json())
+      .then((data) => setAllcategory(data));
+  };
   return (
     <div>
       {/* The button to open modal */}
@@ -21,28 +34,33 @@ const Order = () => {
 
           <input
             type="text"
-            defaultValue={"email"}
+            defaultValue={`Product Name : ${name}`}
             disabled
             className="input input-bordered input-success w-full max-w-xs mt-5"
           />
           <input
             type="text"
-            defaultValue={"price"}
+            defaultValue={`User Email : ${user.email}`}
             disabled
             className="input input-bordered input-success w-full max-w-xs mt-5"
           />
           <input
             type="text"
-            defaultValue={"hi"}
+            defaultValue={`Product Price : ${reprice}`}
             disabled
             className="input input-bordered input-success w-full max-w-xs mt-5"
           />
           <input
             type="text"
+            name="phn"
             placeholder="Phone Number"
             className="input input-bordered input-success w-full max-w-xs mt-5"
+            onChange={(event) => setPhn(event.target.value)}
           />
-          <select className="select select-success w-full max-w-xs mt-5 ">
+          <select
+            className="select select-success w-full max-w-xs mt-5 "
+            onChange={(event) => setDes(event.target.value)}
+          >
             <option disabled selected>
               Pick Location
             </option>
@@ -55,7 +73,9 @@ const Order = () => {
             <option>Dhanmondi</option>
           </select>
           <br></br>
-          <button className="btn btn-primary mt-10">Confirm</button>
+          <button className="btn btn-primary mt-10" onClick={handleSave}>
+            Confirm
+          </button>
         </div>
       </div>
     </div>
