@@ -26,6 +26,35 @@ const Signup = () => {
   };
   //console.log(img);
 
+  const saveUser = (name, url, role, uid) => {
+    //console.log(name, url, email);
+    const user = {
+      email: name,
+      url: url,
+      role: role,
+      uid: uid,
+    };
+    console.log(user);
+    fetch("http://localhost:5000/saveuser", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        //console.log(data);
+        if (data.acknowledged) {
+          toast.success("User Added");
+          console.log("successfull");
+        } else {
+          toast.error("Canceled");
+          console.log("unsucess");
+        }
+      });
+  };
+
   const handleForm = (event) => {
     setSpin(true);
     //alert("hi");
@@ -35,7 +64,9 @@ const Signup = () => {
 
     const name = form.email.value;
     const pass = form.password.value;
-    //console.log(name, pass, role);
+    const url = form.url.value;
+    const role = form.radio.value;
+    console.log(name, pass, url, role);
 
     if (pass.length < 6) {
       setError("Password should be 6 characters or more.");
@@ -46,27 +77,28 @@ const Signup = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
+        handleUpdateUserProfile(url);
+        saveUser(name, url, role, user.uid);
         setSpin(false);
         toast.success("Successful");
-        form.reset();
+        // form.reset();
         setError("");
         // navigate(from, { replace: true });
-        //handleUpdateUserProfile(url);
       })
       .catch((error) => {
         const errorMessage = error.message;
         //console.log("hi");
         setError("Invalid Credentials");
       });
-    // const handleUpdateUserProfile = (url) => {
-    //   const profile = {
-    //     photoURL: url,
-    //   };
-    //   console.log(profile);
-    //   updateUserProfile(profile)
-    //     .then(() => {})
-    //     .catch((error) => console.error(error));
-    // };
+    const handleUpdateUserProfile = (url) => {
+      const profile = {
+        photoURL: url,
+      };
+      console.log(profile);
+      updateUserProfile(profile)
+        .then(() => {})
+        .catch((error) => console.error(error));
+    };
   };
 
   return (
@@ -76,7 +108,7 @@ const Signup = () => {
           <Loader></Loader>
         ) : (
           <>
-            <div className="form   mt-20 ">
+            <div className="form   mt-10 ">
               <h1 className="text-4xl underline text-white m-10">
                 Sign Up Form
               </h1>
@@ -111,7 +143,17 @@ const Signup = () => {
                     placeholder="Password"
                   ></input>
                 </div>
-                <div className="mb-6 w-72 mx-auto">
+                <div className="mb-6">
+                  <input
+                    type="text"
+                    id="url"
+                    name="url"
+                    className="bg-black border w-80 mx-auto border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required
+                    placeholder="Image Url"
+                  ></input>
+                </div>
+                {/* <div className="mb-6 w-72 mx-auto">
                   <label
                     className="text-xl font-bold underline"
                     htmlFor="myfile"
@@ -125,7 +167,7 @@ const Signup = () => {
                     name="myfile"
                     onChange={saveImg}
                   ></input>
-                </div>
+                </div> */}
                 <div className="form-control justify-center flex-wrap flex-row">
                   <label className="label cursor-pointer">
                     <span className="label-text mr-5">Buyer</span>
@@ -136,6 +178,7 @@ const Signup = () => {
                       className="radio checked:bg-blue-500 "
                       value="buyer"
                       onChange={onValueChange}
+                      required
                     />
                   </label>
                 </div>
@@ -149,6 +192,7 @@ const Signup = () => {
                       className="radio checked:bg-blue-500 "
                       value="seller"
                       onChange={onValueChange}
+                      required
                     />
                   </label>
                 </div>

@@ -3,12 +3,12 @@ import toast from "react-hot-toast";
 import { AuthContext } from "../Context/AuthProvider";
 
 const Order = (props) => {
-  const { pname, sname, reprice, email } = props.product;
-  const { user, state, setState } = useContext(AuthContext);
+  const { pname, reprice, email } = props.product;
+  const { user } = useContext(AuthContext);
   const [phn, setPhn] = useState(null);
 
   const [des, setDes] = useState(null);
-  // console.log(props);
+  console.log(props);
   //console.log(phn, des);
   const handleSave = (event) => {
     event.preventDefault();
@@ -20,6 +20,7 @@ const Order = (props) => {
       location: des,
       selleremail: email,
     };
+    console.log(data);
 
     fetch("http://localhost:5000/order", {
       method: "POST",
