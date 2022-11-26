@@ -11,17 +11,17 @@ const Header = () => {
             to="/"
             className="btn btn-ghost normal-case text-2xl  font-bold"
           >
-            UsedPC
+            QuantumTech
           </Link>
         </div>
         <div className="flex-none gap-2">
           <div className="form-control">
-            <Link to="/blogs" className="mr-10 font-black font-semibold">
+            <Link to="/blogs" className="mr-10 font-semibold">
               BLOGS
             </Link>
           </div>
           <div className="form-control">
-            <Link className="mr-10 font-black font-semibold">Dashboard</Link>
+            <Link className="mr-10 font-semibold">Dashboard</Link>
           </div>
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">

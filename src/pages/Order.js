@@ -1,8 +1,9 @@
 import React, { useContext, useState } from "react";
+import toast from "react-hot-toast";
 import { AuthContext } from "../Context/AuthProvider";
 
 const Order = (props) => {
-  const { name, sname, reprice } = props.product;
+  const { name, sname, reprice, email } = props.product;
   const { user } = useContext(AuthContext);
   const [phn, setPhn] = useState(null);
 
@@ -10,9 +11,31 @@ const Order = (props) => {
   //console.log(user.email);
   //console.log(phn, des);
   const handleSave = () => {
-    fetch("http://localhost:5000/order")
+    const data = {
+      itemname: name,
+      useremail: user.email,
+      price: reprice,
+      usernumber: phn,
+      location: des,
+      selleremail: email,
+    };
+
+    fetch("http://localhost:5000/order", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
       .then((res) => res.json())
-      .then((data) => setAllcategory(data));
+      .then((data) => {
+        //console.log(data);
+        if (data.acknowledged) {
+          toast.success("Order confirmed");
+        } else {
+          toast.error(data.message);
+        }
+      });
   };
   return (
     <div>

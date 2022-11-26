@@ -3,6 +3,18 @@ import React from "react";
 const Banner = () => {
   return (
     <div>
+      <h1 className="text-4xl italic  text-center text-white  my-20">
+        Welcome To Quantum Tech
+      </h1>
+      <h1 className="text-xl italic text-center text-white  mt-10 mb-20 mx-auto w-4/12">
+        Here we provide the best oppurtunity for our you to buy your chosen
+        device with a bare price.
+      </h1>
+      <hr className="h-2 bg-white" />
+      <h1 className="text-4xl italic  text-center text-white  mt-20 underline">
+        Gallery
+      </h1>
+
       <div className="carousel w-9/12 rounded mx-auto my-20">
         <div id="slide1" className="carousel-item relative w-full h-full">
           <img

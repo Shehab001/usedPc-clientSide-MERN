@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Banner from "../pages/Banner";
+import Advertise from "./Advertise";
 const Category = () => {
   const [allcategory, setAllcategory] = useState([]);
 
-  console.log(allcategory);
+  //console.log(allcategory);
 
   useEffect(() => {
     fetch("http://localhost:5000/allcategory")
@@ -14,6 +15,7 @@ const Category = () => {
   return (
     <>
       <Banner></Banner>
+      <Advertise></Advertise>
       <div>
         <h1 className="text-6xl italic mt-10 text-center text-white  underline my-20">
           All Categories
