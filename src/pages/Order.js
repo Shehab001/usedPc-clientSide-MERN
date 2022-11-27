@@ -19,6 +19,7 @@ const Order = (props) => {
       usernumber: phn,
       location: des,
       selleremail: email,
+      status: "unpaid",
     };
     //console.log(data);
 

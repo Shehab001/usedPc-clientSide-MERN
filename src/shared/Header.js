@@ -6,32 +6,18 @@ import "./Header.css";
 
 const Header = () => {
   const [hidee, setHidee] = useState(true);
-  const { user, logOut, hide, setHide } = useContext(AuthContext);
-  //console.log(user);
-  const [dbuser, setDbuser] = useState({});
-  //console.log(dbuser.url);
+  const { user, logOut, hide, setHide, dbuser } = useContext(AuthContext);
+  console.log("header", dbuser);
 
-  useEffect(() => {
-    setHide(false);
-    fetch(`http://localhost:5000/user/${user.uid}`)
-      .then((res) => res.json())
-      .then((data) => setDbuser(data[0]));
-  }, [hide]);
-
-  // hide ? (
-  //   fetch(`http://localhost:5000/user/${user.uid}`)
-  //     .then((res) => res.json())
-  //     .then((data) => setDbuser(data[0]))
-  // ) : (
-  //   <></>
-  // );
+  useEffect(() => {}, [hidee]);
 
   const handleBtn = () => {
     setHidee(false);
     logOut()
       .then(() => {
         setHidee(true);
-        setDbuser({});
+        //setDbuser({});
+        //data = null;
       })
       .catch((error) => console.error(error));
   };

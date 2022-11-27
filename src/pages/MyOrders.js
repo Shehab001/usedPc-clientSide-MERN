@@ -1,33 +1,32 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../Context/AuthProvider";
 
 const MyOrders = () => {
+  const { user } = useContext(AuthContext);
+  console.log(user);
+  const [orders, setOrders] = useState({});
+  console.log(orders);
+
+  useEffect(() => {
+    fetch(`http://localhost:5000/myorder/${user.email}`)
+      .then((res) => res.json())
+      .then((data) => setOrders(data));
+  }, []);
+
   return (
-    <div>
-      <div className="card lg:card-side bg-base-100 shadow-xl my-20 mx-10">
+    <div className="mx-10">
+      <h1 className="text-4xl italic mt-10 text-center text-white  underline my-20">
+        My Product
+      </h1>
+      <div className="card w-96 bg-base-100 shadow-xl">
         <figure>
-          <img
-            src="https://placeimg.com/400/400/arch"
-            alt="Album"
-            className=" p-5 rounded"
-          />
+          <img src="https://placeimg.com/400/225/arch" alt="Shoes" />
         </figure>
-        <div className="card-body pt-20">
-          <h2 className="text-center text-2xl font-bold">
-            New album is released!
-          </h2>
-          <div className="text-center p-10">
-            <p className="text-2xl font-bold m-2 ">Price : </p>
-            {/* <p className="font-semibold m-2 ">Resell Price : </p>
-            <p className="font-semibold m-2 ">Original Price :</p>
-            <p className="font-semibold m-2 ">Years of Use : </p>
-            <p className="font-semibold m-2 ">
-              Posted Time :{Date().slice(0, 25)}{" "}
-            </p>
-            <p className="font-semibold m-2 ">Seller's Name : </p> */}
-          </div>
-          <div className="card-actions justify-center">
-            <button className="btn btn-primary mt-10">Pay</button>
-            <button className="btn btn-primary mt-10">Paid</button>
+        <div className="card-body">
+          <h2 className="card-title">Shoes!</h2>
+          <p>If a dog chews shoes whose shoes does he choose?</p>
+          <div className="card-actions justify-end">
+            <button className="btn btn-primary">Buy Now</button>
           </div>
         </div>
       </div>

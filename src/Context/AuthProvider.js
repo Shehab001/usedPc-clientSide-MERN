@@ -18,6 +18,8 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [hide, setHide] = useState(false);
   const [state, setState] = useState(true);
+  const [dbuser, setDbuser] = useState({});
+  console.log(dbuser);
 
   const providerLogin = (provider) => {
     setLoading(true);
@@ -29,7 +31,12 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
-
+  const fetchUser = () => {
+    console.log("hola", user);
+    // fetch(`http://localhost:5000/user/${user.uid}`)
+    //   .then((res) => res.json())
+    //   .then((data) => setDbuser(data[0]));
+  };
   const signIn = (email, password) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
@@ -48,6 +55,11 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       console.log("inside auth state change", currentUser);
       setUser(currentUser);
+
+      fetch(`http://localhost:5000/user/${currentUser.uid}`)
+        .then((res) => res.json())
+        .then((data) => setDbuser(data[0]));
+      // fetchUser(user);
       setLoading(false);
     });
 
@@ -68,6 +80,8 @@ const AuthProvider = ({ children }) => {
     setHide,
     state,
     setState,
+    fetchUser,
+    dbuser,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
