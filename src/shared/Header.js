@@ -1,12 +1,45 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Context/AuthProvider";
+import Loader from "./Loader";
+import "./Header.css";
 
 const Header = () => {
-  const { user } = useContext(AuthContext);
+  const [hidee, setHidee] = useState(true);
+  const { user, logOut, hide, setHide } = useContext(AuthContext);
+  //console.log(user);
+  const [dbuser, setDbuser] = useState({});
+  //console.log(dbuser.url);
+
+  useEffect(() => {
+    setHide(false);
+    fetch(`http://localhost:5000/user/${user.uid}`)
+      .then((res) => res.json())
+      .then((data) => setDbuser(data[0]));
+  }, [hide]);
+
+  // hide ? (
+  //   fetch(`http://localhost:5000/user/${user.uid}`)
+  //     .then((res) => res.json())
+  //     .then((data) => setDbuser(data[0]))
+  // ) : (
+  //   <></>
+  // );
+
+  const handleBtn = () => {
+    setHidee(false);
+    logOut()
+      .then(() => {
+        setHidee(true);
+        setDbuser({});
+      })
+      .catch((error) => console.error(error));
+  };
+
   return (
     <div>
-      <div className="navbar bg-pink-100 text-black">
+      {hidee ? <></> : <Loader></Loader>}
+      <div className="navbar bg-pink-100 text-black bg">
         <div className="flex-1">
           <Link
             to="/"
@@ -22,30 +55,66 @@ const Header = () => {
             </Link>
           </div>
           <div className="form-control">
-            <Link className="mr-10 font-semibold">Dashboard</Link>
+            {dbuser?.role === "seller" ? (
+              <Link to="/sellerdashboard" className="mr-10 font-semibold">
+                Dashboard
+              </Link>
+            ) : (
+              <p></p>
+            )}
+            {dbuser?.role === "buyer" ? (
+              <Link to="/myorders" className="mr-10 font-semibold">
+                Dashboard
+              </Link>
+            ) : (
+              <p></p>
+            )}
+            {dbuser?.role === "admin" ? (
+              <Link to="/admindashboard" className="mr-10 font-semibold">
+                Dashboard
+              </Link>
+            ) : (
+              <p></p>
+            )}
           </div>
+
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
-                <img src="https://placeimg.com/80/80/people" />
+                {user?.uid ? (
+                  <img
+                    src={dbuser?.url}
+                    alt="user"
+                    referrerPolicy="no-referrer"
+                  />
+                ) : (
+                  <img
+                    src="https://res.cloudinary.com/dc9bjecdl/image/upload/v1669530345/Assignment%2012/png-transparent-male-portrait-avatar-computer-icons-icon-design-avatar-flat-face-icon-people-head-cartoon-thumbnail_brsycz.png"
+                    alt="user"
+                  />
+                )}
               </div>
             </label>
             <ul
               tabIndex={0}
               className="mt-3 p-2 shadow menu menu-compact text-white dropdown-content bg-base-100 rounded-box w-52"
             >
-              <li>
-                <a className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </a>
-              </li>
-              <li>
-                <Link to="/login">Log In</Link>
-              </li>
-              <li>
-                <Link to="signup">Sign Up</Link>
-              </li>
+              {user?.uid ? (
+                <li>
+                  <Link to="/" onClick={handleBtn}>
+                    Log Out
+                  </Link>
+                </li>
+              ) : (
+                <>
+                  <li>
+                    <Link to="/login">Log In</Link>
+                  </li>
+                  <li>
+                    <Link to="/signup">Sign Up</Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>

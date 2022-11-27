@@ -8,7 +8,7 @@ const Order = (props) => {
   const [phn, setPhn] = useState(null);
 
   const [des, setDes] = useState(null);
-  console.log(props);
+  //console.log(props);
   //console.log(phn, des);
   const handleSave = (event) => {
     event.preventDefault();
@@ -20,7 +20,7 @@ const Order = (props) => {
       location: des,
       selleremail: email,
     };
-    console.log(data);
+    //console.log(data);
 
     fetch("http://localhost:5000/order", {
       method: "POST",
@@ -66,7 +66,7 @@ const Order = (props) => {
           />
           <input
             type="text"
-            defaultValue={`User Email : ${user.email}`}
+            defaultValue={`User Email : ${user?.email}`}
             disabled
             className="input input-bordered input-success w-full max-w-xs mt-5"
           />

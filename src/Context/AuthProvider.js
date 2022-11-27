@@ -14,13 +14,14 @@ export const AuthContext = createContext();
 const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState("working");
+  const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
-  const [hide, setHide] = useState(true);
+  const [hide, setHide] = useState(false);
   const [state, setState] = useState(true);
 
   const providerLogin = (provider) => {
     setLoading(true);
+
     return signInWithPopup(auth, provider);
   };
 

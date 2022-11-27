@@ -5,7 +5,7 @@ import { AuthContext } from "../Context/AuthProvider";
 import Loader from "../shared/Loader";
 
 const Signup = () => {
-  const { createUser, updateUserProfile, user } = useContext(AuthContext);
+  const { createUser, updateUserProfile, setHide } = useContext(AuthContext);
   //console.log(user);
   const [error, setError] = useState("");
   const [spin, setSpin] = useState(false);
@@ -28,29 +28,29 @@ const Signup = () => {
 
   const saveUser = (name, url, role, uid) => {
     //console.log(name, url, email);
-    const user = {
+    const userr = {
       email: name,
       url: url,
       role: role,
       uid: uid,
     };
-    console.log(user);
+    //console.log(user);
     fetch("http://localhost:5000/saveuser", {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(user),
+      body: JSON.stringify(userr),
     })
       .then((res) => res.json())
       .then((data) => {
         //console.log(data);
         if (data.acknowledged) {
           toast.success("User Added");
-          console.log("successfull");
+          // console.log("successfull");
         } else {
           toast.error("Canceled");
-          console.log("unsucess");
+          // console.log("unsucess");
         }
       });
   };
@@ -66,7 +66,7 @@ const Signup = () => {
     const pass = form.password.value;
     const url = form.url.value;
     const role = form.radio.value;
-    console.log(name, pass, url, role);
+    //console.log(name, pass, url, role);
 
     if (pass.length < 6) {
       setError("Password should be 6 characters or more.");
@@ -81,7 +81,8 @@ const Signup = () => {
         saveUser(name, url, role, user.uid);
         setSpin(false);
         toast.success("Successful");
-        // form.reset();
+        setHide(true);
+        form.reset();
         setError("");
         // navigate(from, { replace: true });
       })
@@ -89,6 +90,8 @@ const Signup = () => {
         const errorMessage = error.message;
         //console.log("hi");
         setError("Invalid Credentials");
+        toast.error("Unsuccessful");
+        setSpin(false);
       });
     const handleUpdateUserProfile = (url) => {
       const profile = {

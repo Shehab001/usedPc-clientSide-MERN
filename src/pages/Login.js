@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import Loader from "../shared/Loader";
 
 const Login = () => {
-  const { signIn, providerLogin, loading } = useContext(AuthContext);
+  const { signIn, providerLogin, loading, setHide } = useContext(AuthContext);
 
   // // const [user, setUser] = useState({});
   const [error, setError] = useState("");
@@ -18,7 +18,34 @@ const Login = () => {
   const googleProvider = new GoogleAuthProvider();
 
   //console.log(from);
-
+  const saveUser = (name, url, uid) => {
+    //console.log(name, url, email);
+    const userr = {
+      email: name,
+      url: url,
+      role: "buyer",
+      uid: uid,
+    };
+    console.log(userr);
+    fetch("http://localhost:5000/saveuser", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(userr),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        //console.log(data);
+        if (data.acknowledged) {
+          toast.success("User Added");
+          // console.log("successfull");
+        } else {
+          toast.error("Canceled");
+          // console.log("unsucess");
+        }
+      });
+  };
   const handleBtn = () => {
     setSpin(true);
     providerLogin(googleProvider)
@@ -27,11 +54,14 @@ const Login = () => {
         // setUser(user);
         //navigate(from, { replace: true });
         //console.log(user);
+        saveUser(user.email, user.photoURL, user.uid);
         setSpin(false);
         toast.success("Successful");
+        setHide(true);
       })
       .catch((err) => {
-        toast.error("Successful");
+        toast.error("Unsuccessful");
+        setSpin(false);
       });
   };
 
@@ -50,6 +80,7 @@ const Login = () => {
         const user = userCredential.user;
         setSpin(false);
         toast.success("Successful");
+        setHide(true);
         //setUser(user);
         // console.log(user);
         // navigate(from, { replace: true });
@@ -57,6 +88,7 @@ const Login = () => {
       .catch((error) => {
         const errorMessage = error.message;
         toast.error("Invalid Credentials");
+        setSpin(false);
       });
   };
   return (
