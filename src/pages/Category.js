@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Context/AuthProvider";
 import Banner from "../pages/Banner";
+
 import Advertise from "./Advertise";
 const Category = () => {
+  const { user } = useState(AuthContext);
+
   const [allcategory, setAllcategory] = useState([]);
 
   //console.log(allcategory);
@@ -15,6 +19,7 @@ const Category = () => {
   return (
     <>
       <Banner></Banner>
+      {/* {user && <Advertise></Advertise>} */}
       <Advertise></Advertise>
       <div>
         <h1 className="text-6xl italic mt-10 text-center text-white  underline my-20">

@@ -1,13 +1,18 @@
 import { editableInputTypes } from "@testing-library/user-event/dist/utils";
 import React, { useContext, useEffect, useState } from "react";
+import { Navigate, useLocation } from "react-router";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../Context/AuthProvider";
+import PrivateRoute from "../Private/Private";
+import Login from "./Login";
 import Order from "./Order";
+import toast from "react-hot-toast";
 
 const Advertise = () => {
   const { user } = useContext(AuthContext);
   const [advertise, setAdvertise] = useState([]);
   const [send, setSend] = useState({});
-
+  const location = useLocation();
   // console.log(advertise);
   const filterData = (data) => {
     const result = data.filter((word) => word.left > 0);
@@ -30,7 +35,9 @@ const Advertise = () => {
   return (
     <div>
       {/* {user.email ? add() : console.log("hlw")} */}
-      <Order key={send._id} x={x} product={send}></Order>
+
+      {user && <Order key={send._id} x={x} product={send}></Order>}
+
       {advertise.length > 0 ? (
         <h1 className="text-4xl italic mt-10 text-center text-white  underline my-20">
           Advertise Product
@@ -83,7 +90,10 @@ const Advertise = () => {
                 <label
                   htmlFor="my-modal-3"
                   className="btn btn-primary"
-                  onClick={() => setSend(ad)}
+                  onClick={() => {
+                    !user && toast.error("You Must Log In");
+                    setSend(ad);
+                  }}
                 >
                   Order
                 </label>

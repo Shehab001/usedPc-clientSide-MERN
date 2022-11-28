@@ -8,7 +8,7 @@ const Order = (props) => {
   const [phn, setPhn] = useState(null);
 
   const [des, setDes] = useState(null);
-  //console.log(props);
+
   //console.log(phn, des);
   const handleSave = (event) => {
     event.preventDefault();

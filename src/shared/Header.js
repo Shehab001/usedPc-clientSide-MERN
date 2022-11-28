@@ -7,7 +7,7 @@ import "./Header.css";
 const Header = () => {
   const [hidee, setHidee] = useState(true);
   const { user, logOut, hide, setHide, dbuser } = useContext(AuthContext);
-  console.log("header", dbuser);
+  //console.log("header", dbuser);
 
   const refresh = () => {
     window.location.reload(false);
