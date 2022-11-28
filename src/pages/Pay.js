@@ -2,7 +2,7 @@ import React from "react";
 import toast from "react-hot-toast";
 
 const Pay = (props) => {
-  console.log(props.payment);
+  console.log(props);
 
   const handleForm = (event) => {
     event.preventDefault();
@@ -36,6 +36,7 @@ const Pay = (props) => {
       number: number,
       date: date,
       cvc: cvc,
+      order: "Ordered",
     };
 
     //console.log(info);
@@ -52,6 +53,7 @@ const Pay = (props) => {
         if (data.acknowledged) {
           toast.success("Payment Done");
           form.reset();
+          props.paid(info);
           // console.log("successfull");
         } else {
           toast.error("Error");

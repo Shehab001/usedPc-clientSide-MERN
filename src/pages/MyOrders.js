@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Context/AuthProvider";
+import toast from "react-hot-toast";
 import Pay from "./Pay";
 
 const MyOrders = () => {
@@ -7,6 +8,7 @@ const MyOrders = () => {
   //console.log(user.email);
   const [orders, setOrders] = useState([]);
   const [send, setSend] = useState({});
+  const [paidd, setPaidd] = useState({});
   //console.log(send);
 
   useEffect(() => {
@@ -15,9 +17,32 @@ const MyOrders = () => {
       .then((data) => setOrders(data));
   }, [user]);
 
+  const paid = (data) => {
+    fetch("http://localhost:5000/updatepayment", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        //console.log(data);
+        if (data.acknowledged) {
+          toast.success("Status Changed");
+          window.location.reload(false);
+
+          // console.log("successfull");
+        } else {
+          toast.error("Error");
+          // console.log("unsucess");
+        }
+      });
+  };
+
   return (
     <>
-      <Pay key={send._id} payment={send}></Pay>
+      <Pay key={send._id} paid={paid} payment={send}></Pay>
       <h1 className="text-4xl italic mt-10 text-center text-white  underline my-20">
         My Product
       </h1>
