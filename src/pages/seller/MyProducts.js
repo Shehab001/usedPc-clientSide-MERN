@@ -21,7 +21,10 @@ const MyProducts = () => {
     console.log(data._id);
     fetch(`http://localhost:5000/sadvertise/${data._id}`)
       .then((res) => res.json())
-      .then((data) => window.location.reload(false));
+      .then((data) => {
+        toast.success("Successfully Advertised");
+        window.location.reload(false);
+      });
   };
   const deleteProduct = () => {
     console.log(data._id);
@@ -183,7 +186,7 @@ const MyProducts = () => {
                       className="btn btn-primary"
                       onClick={() => {
                         setData(product);
-                        advertise();
+                        data._id ? advertise() : console.log(data._id);
                       }}
                     >
                       Advertise

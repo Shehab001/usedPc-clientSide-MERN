@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../Context/AuthProvider";
 import toast from "react-hot-toast";
 import Loader from "../shared/Loader";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { signIn, providerLogin, loading, setHide } = useContext(AuthContext);
@@ -11,9 +12,9 @@ const Login = () => {
   // // const [user, setUser] = useState({});
   const [error, setError] = useState("");
   const [spin, setSpin] = useState(false);
-  // const navigate = useNavigate();
-  // const location = useLocation();
-  // const from = location.state?.from?.pathname || "/";
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const googleProvider = new GoogleAuthProvider();
 
@@ -52,7 +53,7 @@ const Login = () => {
       .then((result) => {
         const user = result.user;
         // setUser(user);
-        //navigate(from, { replace: true });
+        navigate(from, { replace: true });
         //console.log(user);
         saveUser(user.email, user.photoURL, user.uid);
         setSpin(false);
@@ -83,7 +84,7 @@ const Login = () => {
         setHide(true);
         //setUser(user);
         // console.log(user);
-        // navigate(from, { replace: true });
+        navigate(from, { replace: true });
       })
       .catch((error) => {
         const errorMessage = error.message;

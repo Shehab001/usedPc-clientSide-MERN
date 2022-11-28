@@ -19,7 +19,7 @@ const AuthProvider = ({ children }) => {
   const [hide, setHide] = useState(false);
   const [state, setState] = useState(true);
   const [dbuser, setDbuser] = useState({});
-  //console.log(dbuser);
+  console.log(dbuser);
 
   const providerLogin = (provider) => {
     setLoading(true);
@@ -55,10 +55,11 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       console.log("inside auth state change", currentUser);
       setUser(currentUser);
-
-      fetch(`http://localhost:5000/user/${currentUser.uid}`)
-        .then((res) => res.json())
-        .then((data) => setDbuser(data[0]));
+      console.log(currentUser.uid);
+      currentUser.uid &&
+        fetch(`http://localhost:5000/user/${currentUser.uid}`)
+          .then((res) => res.json())
+          .then((data) => setDbuser(data[0]));
       // fetchUser(user);
       setLoading(false);
     });

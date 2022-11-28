@@ -12,6 +12,7 @@ import Dashboard from "../pages/seller/Dashboard";
 import Dashboardd from "../pages/admin/Dashboardd";
 import Error from "../shared/Error";
 import Loader from "../shared/Loader";
+import PrivateRoute from "../Private/Private";
 
 const router = createBrowserRouter([
   {
@@ -25,7 +26,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/categories/:id",
-        element: <ProductDetails></ProductDetails>,
+        element: (
+          <PrivateRoute>
+            <ProductDetails></ProductDetails>
+          </PrivateRoute>
+        ),
         loader: ({ params }) =>
           fetch(`http://localhost:5000/productdetails/${params.id}`),
       },

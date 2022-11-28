@@ -19,20 +19,22 @@ const Signup = () => {
     setRole(event.target.value);
   };
   //console.log(role);
-  const saveImg = (event) => {
-    if (event.target.files.length != 0) {
-      setImg(event.target.files[0]);
-    }
-  };
+  // const saveImg = (event) => {
+  //   if (event.target.files.length != 0) {
+  //     setImg(event.target.files[0]);
+  //   }
+  // };
   //console.log(img);
 
-  const saveUser = (name, url, role, uid) => {
+  const saveUser = (name, email, phn, url, role, uid) => {
     //console.log(name, url, email);
     const userr = {
-      email: name,
+      name: name,
+      email: email,
       url: url,
       role: role,
       uid: uid,
+      phn: phn,
     };
     //console.log(user);
     fetch("http://localhost:5000/saveuser", {
@@ -62,10 +64,12 @@ const Signup = () => {
 
     const form = event.target;
 
-    const name = form.email.value;
+    const email = form.email.value;
     const pass = form.password.value;
     const url = form.url.value;
     const role = form.radio.value;
+    const phn = form.phn.value;
+    const name = form.name.value;
     //console.log(name, pass, url, role);
 
     if (pass.length < 6) {
@@ -73,16 +77,16 @@ const Signup = () => {
       return;
     }
 
-    createUser(name, pass)
+    createUser(email, pass)
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
         handleUpdateUserProfile(url);
-        saveUser(name, url, role, user.uid);
+        saveUser(name, email, phn, url, role, user.uid);
         setSpin(false);
         toast.success("Successful");
         setHide(true);
-        form.reset();
+        //form.reset();
         setError("");
         // navigate(from, { replace: true });
       })
@@ -133,6 +137,16 @@ const Signup = () => {
                     name="email"
                     className="bg-black border mx-auto border-gray-300 text-white text-sm rounded-lg w-80 focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Email"
+                    required
+                  ></input>
+                </div>
+                <div className="mb-6">
+                  <input
+                    type="text"
+                    id="phn"
+                    name="phn"
+                    className="bg-black border mx-auto border-gray-300 text-white text-sm rounded-lg w-80 focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Contact Number"
                     required
                   ></input>
                 </div>

@@ -1,12 +1,14 @@
 import { editableInputTypes } from "@testing-library/user-event/dist/utils";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../Context/AuthProvider";
 import Order from "./Order";
 
 const Advertise = () => {
+  const { user } = useContext(AuthContext);
   const [advertise, setAdvertise] = useState([]);
   const [send, setSend] = useState({});
 
-  console.log(advertise);
+  // console.log(advertise);
   const filterData = (data) => {
     const result = data.filter((word) => word.left > 0);
     setAdvertise(result);
@@ -14,13 +16,20 @@ const Advertise = () => {
   const x = () => {
     window.location.reload(false);
   };
+  //   const add = () => {
+  //     console.log(user.email);
+  //     fetch(`http://localhost:5000/showadvertise/${user.email}`)
+  //       .then((res) => res.json())
+  //       .then((data) => filterData(data));
+  //   };
   useEffect(() => {
-    fetch("http://localhost:5000/advertise")
+    fetch("http://localhost:5000/showadvertise")
       .then((res) => res.json())
-      .then((data) => filterData(data));
-  }, []);
+      .then((data) => setAdvertise(data));
+  }, [user?.email]);
   return (
     <div>
+      {/* {user.email ? add() : console.log("hlw")} */}
       <Order key={send._id} x={x} product={send}></Order>
       {advertise.length > 0 ? (
         <h1 className="text-4xl italic mt-10 text-center text-white  underline my-20">
@@ -30,8 +39,8 @@ const Advertise = () => {
         <p></p>
       )}
       <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 mx-10 mb-20">
-        {advertise.map((ad) => (
-          <div className="card w-96 bg-base-100 shadow-xl">
+        {advertise?.map((ad) => (
+          <div key={ad._id} className="card w-96 bg-base-100 shadow-xl">
             <figure>
               <img src={ad.url} alt={ad.name} />
             </figure>
