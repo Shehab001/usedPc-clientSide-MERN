@@ -19,7 +19,7 @@ const AuthProvider = ({ children }) => {
   const [hide, setHide] = useState(false);
   const [state, setState] = useState(true);
   const [dbuser, setDbuser] = useState({});
-  console.log(dbuser);
+  //console.log(dbuser);
 
   const providerLogin = (provider) => {
     setLoading(true);

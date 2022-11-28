@@ -7,12 +7,15 @@ import "./Header.css";
 const Header = () => {
   const [hidee, setHidee] = useState(true);
   const { user, logOut, hide, setHide, dbuser } = useContext(AuthContext);
-  console.log("header", dbuser);
+  //console.log("header", dbuser);
 
-  useEffect(() => {}, [hidee]);
+  const refresh = () => {
+    window.location.reload(false);
+  };
 
   const handleBtn = () => {
     setHidee(false);
+    refresh();
     logOut()
       .then(() => {
         setHidee(true);

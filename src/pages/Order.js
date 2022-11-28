@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import { AuthContext } from "../Context/AuthProvider";
 
 const Order = (props) => {
-  const { pname, reprice, email } = props.product;
+  const { pname, reprice, email, url } = props.product;
   const { user } = useContext(AuthContext);
   const [phn, setPhn] = useState(null);
 
@@ -20,6 +20,7 @@ const Order = (props) => {
       location: des,
       selleremail: email,
       status: "unpaid",
+      url: url,
     };
     //console.log(data);
 

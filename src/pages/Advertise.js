@@ -6,7 +6,7 @@ const Advertise = () => {
   const [advertise, setAdvertise] = useState([]);
   const [send, setSend] = useState({});
 
-  //console.log(advertise);
+  console.log(advertise);
   const filterData = (data) => {
     const result = data.filter((word) => word.left > 0);
     setAdvertise(result);
