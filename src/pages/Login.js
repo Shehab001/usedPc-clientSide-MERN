@@ -28,7 +28,7 @@ const Login = () => {
       uid: uid,
     };
     console.log(userr);
-    fetch("http://localhost:5000/saveuser", {
+    fetch("https://usedpc-server-shehab001.vercel.app/saveuser", {
       method: "POST",
       headers: {
         "content-type": "application/json",

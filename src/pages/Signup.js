@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Context/AuthProvider";
 import Loader from "../shared/Loader";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Signup = () => {
   const { createUser, updateUserProfile, setHide } = useContext(AuthContext);
@@ -12,9 +13,11 @@ const Signup = () => {
 
   const [role, setRole] = useState("");
   const [img, setImg] = useState("");
-  // const navigate = useNavigate();
-  // const location = useLocation();
-  // const from = location.state?.from?.pathname || "/";
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const onValueChange = (event) => {
     setRole(event.target.value);
   };
@@ -37,7 +40,7 @@ const Signup = () => {
       phn: phn,
     };
     //console.log(user);
-    fetch("http://localhost:5000/saveuser", {
+    fetch("https://usedpc-server-shehab001.vercel.app/saveuser", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -48,6 +51,8 @@ const Signup = () => {
       .then((data) => {
         //console.log(data);
         if (data.acknowledged) {
+          window.location.reload(false);
+
           toast.success("User Added");
           // console.log("successfull");
         } else {
@@ -88,7 +93,7 @@ const Signup = () => {
         setHide(true);
         //form.reset();
         setError("");
-        // navigate(from, { replace: true });
+        navigate(from, { replace: true });
       })
       .catch((error) => {
         const errorMessage = error.message;

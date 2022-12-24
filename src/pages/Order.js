@@ -24,7 +24,7 @@ const Order = (props) => {
     };
     //console.log(data);
 
-    fetch("http://localhost:5000/order", {
+    fetch("https://usedpc-server-shehab001.vercel.app/order", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -32,9 +32,10 @@ const Order = (props) => {
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
-      .then((data) => {
-        //console.log(data);
-        if (data.acknowledged) {
+      .then((dataa) => {
+        //alert("hi");
+        //console.log(dataa);
+        if (dataa.acknowledged) {
           toast.success("Order confirmed");
           props.x();
         } else {

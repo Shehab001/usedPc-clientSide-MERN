@@ -18,7 +18,7 @@ const Banner = () => {
       <div className="carousel w-9/12 rounded mx-auto my-20">
         <div id="slide1" className="carousel-item relative w-full h-full">
           <img
-            src="https://res.cloudinary.com/dc9bjecdl/image/upload/v1669434537/Assignment%2012/photo-1514826786317-59744fe2a548_gklc9u.jpg"
+            src="https://images.unsplash.com/photo-1661961110218-35af7210f803?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
             alt="mac"
             className="w-full"
           />
@@ -33,7 +33,7 @@ const Banner = () => {
         </div>
         <div id="slide2" className="carousel-item relative w-full">
           <img
-            src="https://res.cloudinary.com/dc9bjecdl/image/upload/v1669434537/Assignment%2012/download_lpno2c.jpg"
+            src="https://images.unsplash.com/photo-1661961112951-f2bfd1f253ce?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=872&q=80"
             alt="random"
             className="w-full"
           />
@@ -48,7 +48,7 @@ const Banner = () => {
         </div>
         <div id="slide3" className="carousel-item relative w-full">
           <img
-            src="https://res.cloudinary.com/dc9bjecdl/image/upload/v1669434537/Assignment%2012/images_i5incq.jpg"
+            src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80"
             alt="random"
             className="w-full"
           />

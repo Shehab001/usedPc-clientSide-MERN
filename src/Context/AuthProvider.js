@@ -33,7 +33,7 @@ const AuthProvider = ({ children }) => {
   };
   const fetchUser = () => {
     console.log("hola", user);
-    // fetch(`http://localhost:5000/user/${user.uid}`)
+    // fetch(`https://usedpc-server-shehab001.vercel.app/user/${user.uid}`)
     //   .then((res) => res.json())
     //   .then((data) => setDbuser(data[0]));
   };
@@ -55,9 +55,11 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       console.log("inside auth state change", currentUser);
       setUser(currentUser);
-      console.log(currentUser.uid);
-      currentUser.uid &&
-        fetch(`http://localhost:5000/user/${currentUser.uid}`)
+      //console.log(currentUser?.uid);
+      currentUser?.uid &&
+        fetch(
+          `https://usedpc-server-shehab001.vercel.app/user/${currentUser.uid}`
+        )
           .then((res) => res.json())
           .then((data) => setDbuser(data[0]));
       // fetchUser(user);

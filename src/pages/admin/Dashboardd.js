@@ -1,24 +1,30 @@
 import React, { useEffect, useState } from "react";
 import Admin from "./Admin";
 import toast from "react-hot-toast";
+import Loader from "../../shared/Loader";
 
 const Dashboardd = () => {
   const [users, setUsers] = useState([]);
   const [data, setData] = useState([]);
+  const [spinn, setSpinn] = useState(false);
 
   // console.log(data);
   useEffect(() => {
-    fetch("http://localhost:5000/admin")
+    setSpinn(true);
+    fetch("https://usedpc-server-shehab001.vercel.app/admin")
       .then((res) => res.json())
       .then((data) => setUsers(data));
 
-    fetch("http://localhost:5000/allproduct")
+    fetch("https://usedpc-server-shehab001.vercel.app/allproduct")
       .then((res) => res.json())
-      .then((data) => setData(data));
+      .then((data) => {
+        setData(data);
+        setSpinn(false);
+      });
   }, []);
   const deleteUser = (user) => {
     console.log(user._id);
-    fetch(`http://localhost:5000/deleteuserr/${user._id}`)
+    fetch(`https://usedpc-server-shehab001.vercel.app/deleteuserr/${user._id}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.deletedCount === 1) {
@@ -31,7 +37,7 @@ const Dashboardd = () => {
   };
   const verify = (user) => {
     console.log(user._id);
-    fetch(`http://localhost:5000/verify/${user._id}`)
+    fetch(`https://usedpc-server-shehab001.vercel.app/verify/${user._id}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.acknowledged) {
@@ -49,6 +55,7 @@ const Dashboardd = () => {
         <h1 className="text-4xl italic mt-10 text-center text-white  underline my-20">
           All Seller
         </h1>
+        {spinn && <Loader></Loader>}
         <div className="grid grid-cols-1 mb-5 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3">
           {users.map(
             (user) =>
@@ -87,6 +94,7 @@ const Dashboardd = () => {
         <h1 className="text-4xl italic mt-10 text-center text-white  underline my-20">
           All Buyer
         </h1>
+        {spinn && <Loader></Loader>}
         <div className="grid grid-cols-1 mb-5 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3">
           {users.map(
             (user) =>
@@ -125,6 +133,7 @@ const Dashboardd = () => {
         <h1 className="text-4xl italic mt-10 text-center text-white  underline my-20">
           Reported Items
         </h1>
+        {spinn && <Loader></Loader>}
         <div className="grid grid-cols-1 mb-5 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3">
           {data.map(
             (user) =>
@@ -163,6 +172,7 @@ const Dashboardd = () => {
         <h1 className="text-4xl italic mt-10 text-center text-white  underline my-20">
           Unverified Items
         </h1>
+        {spinn && <Loader></Loader>}
         <div className="grid grid-cols-1 mb-5 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3">
           {data.map(
             (user) =>

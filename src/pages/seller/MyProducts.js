@@ -6,29 +6,37 @@ import Loader from "../../shared/Loader";
 const MyProducts = () => {
   const { user } = useContext(AuthContext);
   const [products, setProducts] = useState([]);
-  const [spin, setSpin] = useState(false);
+  const [spinn, setSpinn] = useState(false);
   const [data, setData] = useState({});
   //console.log(data);
   //   console.log(products);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/sellerproduct/${user.email}`)
+    setSpinn(true);
+    fetch(
+      `https://usedpc-server-shehab001.vercel.app/sellerproduct/${user.email}`
+    )
       .then((res) => res.json())
-      .then((data) => setProducts(data));
+      .then((data) => {
+        setProducts(data);
+        setSpinn(false);
+      });
   }, [user.email]);
 
-  const advertise = () => {
-    console.log(data._id);
-    fetch(`http://localhost:5000/sadvertise/${data._id}`)
+  const advertise = (data) => {
+    //console.log(data._id);
+    fetch(`https://usedpc-server-shehab001.vercel.app/sadvertise/${data._id}`)
       .then((res) => res.json())
       .then((data) => {
         toast.success("Successfully Advertised");
         window.location.reload(false);
       });
   };
-  const deleteProduct = () => {
+  const deleteProduct = (data) => {
     console.log(data._id);
-    fetch(`http://localhost:5000/deleteproduct/${data._id}`)
+    fetch(
+      `https://usedpc-server-shehab001.vercel.app/deleteproduct/${data._id}`
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.deletedCount === 1) {
@@ -41,7 +49,7 @@ const MyProducts = () => {
   };
 
   const handleForm = (event) => {
-    setSpin(true);
+    // setSpinn(true);
     //alert("hi");
     event.preventDefault();
 
@@ -79,10 +87,11 @@ const MyProducts = () => {
       con: con,
       nmbr: nmbr,
       advertise: "No",
+      verify: "no",
     };
     // console.log(info);
 
-    fetch("http://localhost:5000/addproduct", {
+    fetch("https://usedpc-server-shehab001.vercel.app/addproduct", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -93,8 +102,8 @@ const MyProducts = () => {
       .then((data) => {
         //console.log(data);
         if (data.acknowledged) {
-          setSpin(false);
-          toast.success("Prduct Added");
+          // setSpin(false);
+          toast.success("Product Added");
           form.reset();
           window.location.reload(false);
           // console.log("successfull");
@@ -106,7 +115,7 @@ const MyProducts = () => {
   };
   return (
     <>
-      {spin ? (
+      {spinn ? (
         <Loader></Loader>
       ) : (
         <>
@@ -176,8 +185,10 @@ const MyProducts = () => {
                     <label
                       className="btn btn-primary"
                       onClick={() => {
-                        setData(product);
-                        data._id ? deleteProduct() : console.log(data._id);
+                        //setData(product);
+                        product._id
+                          ? deleteProduct(product)
+                          : console.log(data._id);
                       }}
                     >
                       Delete
@@ -185,8 +196,10 @@ const MyProducts = () => {
                     <label
                       className="btn btn-primary"
                       onClick={() => {
-                        setData(product);
-                        data._id ? advertise() : console.log(data._id);
+                        //setData(product);
+                        product._id
+                          ? advertise(product)
+                          : console.log(data._id);
                       }}
                     >
                       Advertise

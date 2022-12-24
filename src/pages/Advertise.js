@@ -7,13 +7,15 @@ import PrivateRoute from "../Private/Private";
 import Login from "./Login";
 import Order from "./Order";
 import toast from "react-hot-toast";
+import Loader from "../shared/Loader";
 
 const Advertise = () => {
   const { user } = useContext(AuthContext);
   const [advertise, setAdvertise] = useState([]);
   const [send, setSend] = useState({});
-  const location = useLocation();
-  // console.log(advertise);
+  const [spinn, setSpinn] = useState(false);
+
+  console.log(advertise);
   const filterData = (data) => {
     const result = data.filter((word) => word.left > 0);
     setAdvertise(result);
@@ -23,14 +25,18 @@ const Advertise = () => {
   };
   //   const add = () => {
   //     console.log(user.email);
-  //     fetch(`http://localhost:5000/showadvertise/${user.email}`)
+  //     fetch(`https://usedpc-server-shehab001.vercel.app/showadvertise/${user.email}`)
   //       .then((res) => res.json())
   //       .then((data) => filterData(data));
   //   };
   useEffect(() => {
-    fetch("http://localhost:5000/showadvertise")
+    setSpinn(true);
+    fetch("https://usedpc-server-shehab001.vercel.app/showadvertise")
       .then((res) => res.json())
-      .then((data) => setAdvertise(data));
+      .then((data) => {
+        setAdvertise(data);
+        setSpinn(false);
+      });
   }, [user?.email]);
   return (
     <div>
@@ -45,10 +51,11 @@ const Advertise = () => {
       ) : (
         <p></p>
       )}
+      {spinn && <Loader></Loader>}
       <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 mx-10 mb-20">
         {advertise?.map((ad) => (
           <div key={ad._id} className="card w-96 bg-base-100 shadow-xl">
-            <figure>
+            <figure className="p-5">
               <img src={ad.url} alt={ad.name} />
             </figure>
             <div className="card-body">

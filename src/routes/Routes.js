@@ -32,7 +32,9 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/productdetails/${params.id}`),
+          fetch(
+            `https://usedpc-server-shehab001.vercel.app/productdetails/${params.id}`
+          ),
       },
       {
         path: "/blogs",

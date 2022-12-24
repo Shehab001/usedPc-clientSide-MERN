@@ -2,29 +2,37 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Context/AuthProvider";
 import Banner from "../pages/Banner";
+import Loader from "../shared/Loader";
 
 import Advertise from "./Advertise";
 const Category = () => {
   const { user } = useState(AuthContext);
+  const [spinn, setSpinn] = useState(false);
 
   const [allcategory, setAllcategory] = useState([]);
 
   //console.log(allcategory);
 
   useEffect(() => {
-    fetch("http://localhost:5000/allcategory")
+    setSpinn(true);
+    fetch("https://usedpc-server-shehab001.vercel.app/allcategory")
       .then((res) => res.json())
-      .then((data) => setAllcategory(data));
+      .then((data) => {
+        setAllcategory(data);
+        setSpinn(false);
+      });
   }, []);
   return (
     <>
       <Banner></Banner>
       {/* {user && <Advertise></Advertise>} */}
       <Advertise></Advertise>
+
       <div>
         <h1 className="text-6xl italic mt-10 text-center text-white  underline my-20">
           All Categories
         </h1>
+        {spinn && <Loader></Loader>}
         <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 mx-10 mb-20">
           {allcategory.map((category) => (
             <div

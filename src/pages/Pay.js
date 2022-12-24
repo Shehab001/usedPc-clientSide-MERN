@@ -40,7 +40,7 @@ const Pay = (props) => {
     };
 
     //console.log(info);
-    fetch("http://localhost:5000/payment", {
+    fetch("https://usedpc-server-shehab001.vercel.app/payment", {
       method: "POST",
       headers: {
         "content-type": "application/json",
