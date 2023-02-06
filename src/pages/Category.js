@@ -15,7 +15,9 @@ const Category = () => {
 
   useEffect(() => {
     setSpinn(true);
-    fetch("https://usedpc-server-shehab001.vercel.app/allcategory")
+    fetch("https://usedpc-server-shehab001.vercel.app/allcategory", {
+      headers: { authorization: `Bearer ${localStorage.getItem("token")}` },
+    })
       .then((res) => res.json())
       .then((data) => {
         setAllcategory(data);

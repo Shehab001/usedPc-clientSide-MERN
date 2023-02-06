@@ -3,13 +3,23 @@ import { AuthContext } from "../Context/AuthProvider";
 import toast from "react-hot-toast";
 import Pay from "./Pay";
 import Loader from "../shared/Loader";
+//import axios from "axios";
+//import StripeCheckout from "react-stripe-checkout";
 
 const MyOrders = () => {
   const { user } = useContext(AuthContext);
   //console.log(user.email);
   const [orders, setOrders] = useState([]);
   const [send, setSend] = useState({});
+  console.log(orders);
   const [spinn, setSpinn] = useState(false);
+  // const publishableKey =
+  //   "pk_test_51LVKw8GSGClrvX9qQR80gAdslLitEfoxn9BlZ549BvvqY7hj4ITUNPWfpH38uXKhXeExTs4yAT3peZOYvlKqUHqC00V8OjI91q";
+  // const [product, setProduct] = useState({
+  //   name: "Headphone",
+  //   price: 5,
+  // });
+  //const priceForStripe = product.price * 100;
   //console.log(send);
 
   useEffect(() => {
@@ -22,32 +32,53 @@ const MyOrders = () => {
       });
   }, [user]);
 
-  const paid = (data) => {
-    fetch("https://usedpc-server-shehab001.vercel.app/updatepayment", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        //console.log(data);
-        if (data.acknowledged) {
-          toast.success("Status Changed");
-          window.location.reload(false);
+  // const paid = (data) => {
+  //   fetch("https://usedpc-server-shehab001.vercel.app/updatepayment", {
+  //     method: "POST",
+  //     headers: {
+  //       "content-type": "application/json",
+  //     },
+  //     body: JSON.stringify(data),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       //console.log(data);
+  //       if (data.acknowledged) {
+  //         toast.success("Status Changed");
+  //         window.location.reload(false);
 
-          // console.log("successfull");
-        } else {
-          toast.error("Error");
-          // console.log("unsucess");
-        }
-      });
-  };
+  //         // console.log("successfull");
+  //       } else {
+  //         toast.error("Error");
+  //         // console.log("unsucess");
+  //       }
+  //     });
+  // };
+
+  //other way to use stripe
+  // const payNow = async (token) => {
+  //   try {
+  //     const response = await axios({
+  //       url: "http://localhost:5000/paymentstripe",
+  //       method: "post",
+  //       data: {
+  //         amount: product.price * 100,
+  //         token,
+  //       },
+  //     });
+  //     if (response.status === 200) {
+  //       alert("Success");
+  //     }
+  //   } catch (error) {
+  //     alert("Failed");
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <>
-      <Pay key={send._id} paid={paid} payment={send}></Pay>
+      <Pay key={send._id} payment={send}></Pay>
+
       <h1 className="text-4xl italic mt-10 text-center text-white  underline my-20">
         My Product
       </h1>
@@ -88,6 +119,16 @@ const MyOrders = () => {
           </div>
         ))}
       </div>
+      {/* <StripeCheckout
+        stripeKey={publishableKey}
+        label="Pay Now"
+        name="Pay With Credit Card"
+        billingAddress
+        shippingAddress
+        amount={priceForStripe}
+        description={`Your total is $${product.price}`}
+        token={payNow}
+      /> */}
     </>
   );
 };

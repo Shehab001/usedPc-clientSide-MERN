@@ -13,6 +13,9 @@ import Dashboardd from "../pages/admin/Dashboardd";
 import Error from "../shared/Error";
 import Loader from "../shared/Loader";
 import PrivateRoute from "../Private/Private";
+import Pay from "../pages/Pay";
+
+import Payment from "../pages/Payment";
 
 const router = createBrowserRouter([
   {
@@ -63,6 +66,10 @@ const router = createBrowserRouter([
       {
         path: "/loader",
         element: <Loader></Loader>,
+      },
+      {
+        path: "/stripe",
+        element: <Payment></Payment>,
       },
 
       {

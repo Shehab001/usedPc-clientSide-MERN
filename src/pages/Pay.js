@@ -1,66 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
+import { loadStripe } from "@stripe/stripe-js";
+import Payment from "./Payment";
 
 const Pay = (props) => {
-  console.log(props);
+  const [data, setdata] = useState(props.payment);
+  console.log(data);
 
-  const handleForm = (event) => {
-    event.preventDefault();
-
-    const form = event.target;
-
-    const number = form.number.value;
-    const date = form.date.value;
-    const cvc = form.cvc.value;
-    // console.log(number.length);
-    if (number.length < 11) {
-      toast.error("Invalid Card Info");
-      form.reset();
-      return;
-    }
-    if (date.length < 2) {
-      toast.error("Invalid Card Info");
-      form.reset();
-      return;
-    }
-    if (cvc.length < 2) {
-      toast.error("Invalid Card Info");
-      form.reset();
-      return;
-    }
-    // console.log(number, date, cvc);
-    const info = {
-      itemname: props.payment.itemname,
-      useremail: props.payment.useremail,
-      status: props.payment.status,
-      number: number,
-      date: date,
-      cvc: cvc,
-      order: "Ordered",
-    };
-
-    //console.log(info);
-    fetch("https://usedpc-server-shehab001.vercel.app/payment", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(info),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        //console.log(data);
-        if (data.acknowledged) {
-          toast.success("Payment Done");
-          form.reset();
-          props.paid(info);
-          // console.log("successfull");
-        } else {
-          toast.error("Error");
-          // console.log("unsucess");
-        }
-      });
-  };
   return (
     <div>
       <div>
@@ -69,7 +15,7 @@ const Pay = (props) => {
         {/* Put this part before </body> tag */}
         <input type="checkbox" id="my-modal-3" className="modal-toggle" />
         <div className="modal">
-          <div className="modal-box relative">
+          <div className="modal-box relative bg-slate-200	">
             <label
               htmlFor="my-modal-3"
               className="btn btn-sm btn-circle absolute right-2 top-2"
@@ -80,7 +26,7 @@ const Pay = (props) => {
               Card Info
             </h3>
 
-            <form onSubmit={handleForm}>
+            {/* <form onSubmit={handleForm}>
               <input
                 type="text"
                 name="number"
@@ -104,7 +50,8 @@ const Pay = (props) => {
               />
               <br></br>
               <button className="btn btn-primary mt-10">Confirm</button>
-            </form>
+            </form> */}
+            <Payment data={data}></Payment>
           </div>
         </div>
       </div>

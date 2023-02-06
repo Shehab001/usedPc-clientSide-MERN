@@ -53,9 +53,11 @@ const Login = () => {
       .then((result) => {
         const user = result.user;
         // setUser(user);
+        saveUser(user.email, user.photoURL, user.uid);
+        jwt(user);
         navigate(from, { replace: true });
         //console.log(user);
-        saveUser(user.email, user.photoURL, user.uid);
+
         setSpin(false);
         toast.success("Successful");
         setHide(true);
@@ -83,7 +85,8 @@ const Login = () => {
         toast.success("Successful");
         setHide(true);
         //setUser(user);
-        // console.log(user);
+        //console.log(user);
+        jwt(user);
         navigate(from, { replace: true });
       })
       .catch((error) => {
@@ -91,6 +94,19 @@ const Login = () => {
         toast.error("Invalid Credentials");
         setSpin(false);
       });
+  };
+
+  const jwt = (user) => {
+    //jwt
+    fetch("http://localhost:5000/jwt", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => localStorage.setItem("token", data.token));
   };
   return (
     <div className="w-full	 mx-auto">
@@ -100,7 +116,6 @@ const Login = () => {
           <Loader></Loader>
         ) : (
           <>
-            {" "}
             <form className="pb-20" onSubmit={handleForm}>
               <div className="mb-6">
                 <input
